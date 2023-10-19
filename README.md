@@ -1,2 +1,2 @@
 # IntroductionToRobotics
-Bine ai venit în lumea fascinantă a roboticilor! Acest curs îți oferă o incursiune captivantă în domeniul roboticilor, unde vei descoperi secretele din spatele creației și programării roboților.
+Bine ai venit în spațiul meu dedicat explorării fascinante a roboticilor! Acest repository este creat special pentru cursul de "Introduction to Robotics" susținut de domnul profesor Andrei Dumitru.In acest repository voi posta cerintele temelor cat si rezolvarea acestora pe care ni le-a acordat domnul profesor.

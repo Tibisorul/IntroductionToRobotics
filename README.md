@@ -27,3 +27,29 @@ Deadline: 26 Octombrie 2023
 - Programare Arduino: Am scris codul necesar pentru a citi valorile de la potențiometre și am controlat intensitatea luminii pentru fiecare componentă a LED-ului RGB. Deci,rotind potențiometrul, am modificat rezistența acestuia, ceea ce a influențat valoarea analogică citită de Arduino.
 - Utilizare GitHub: Am  adăugat codul într-un repository Git și am actualizat README-ul cu informații despre proiect, o fotografie a configurației și un link către un videoclip demonstrativ.
 - Comunicare eficientă a rezultatelor: Prin adăugarea unui videoclip pe o platformă accesibilă, am asigurat o modalitate eficientă de a prezenta funcționalitatea proiectului.
+
+# Homework #3 - Elevator simulator wannabe
+
+Deadline: 31 Octombrie 2023
+
+### [TikTok Video Showcase](https://www.tiktok.com/@tiberiug.dobre/video/7295362196702268705)
+
+#### Componentele utilizate:
+- LED-uri (4): Pentru fiecare buton(etaj) am utilizat un LED de culoare rosie, iar pentru a defini in ce stare se afla liftul am utilizat un LED de culoare verde.
+- Butoane (3): Fiecare buton reprezinta un etaj.Prin apasarea butonului ne putem "deplasa" la etajul dorit, iar LED-ul asociat fiecarui etaj se va aprinde. 
+- Rezistoare(6) si fire: Am utilizat 5 rezistoare de tip PULLUP(5100Ω) pentru a asigura o conexiune corecta pentru butoane. Astfel,fiind rezistoare de tip PULLUP, LED-urile vor functiona atunci cand este actionat butonul.Am mai utilizat un rezistor de 10Ω pentru a-i oferi buzzer-ului un sunet mai placut.
+- Buzzer(1): Acesta se ocupa cu emiterea unor zgomote in functie de momentul in care se afla liftul.
+- Arduino Board: Placa Arduino este creierul proiectului meu, care face posibila functionarea acestui lift wannabe, fiind programat prin intermediul aplicatiei Arduino.
+  
+  ![image](https://github.com/Tibisorul/IntroductionToRobotics/assets/127014075/7803b112-c41f-4c0e-ad51-11272b8d31ce)
+
+
+#### Ce trebuie sa am in vedere:
+- Folosirea funcției delay() în loc de millis().
+- Utilizarea denumirilor de variabile neprecise, cum ar fi btn1, led1. Optarea pentru denumiri mai descriptive, cum ar fi floor1Button, floor1LED.
+- Ignorarea nefolosirii debounce-ului , ceea ce poate duce la mișcări neintenționate ale liftului sau la sunete multiple ale buzzerului.
+- Programarea  LED-ul operațional al liftului să clipească atunci când liftul se mișcă.
+
+#### Ce am aprofundat in urma acestei teme:
+- Interfatare Hardware: Prin intermediul acestei teme, dar si prin intermediul laboratorului, am realizat necesitatea rezistoarelor de tip PULLUP si PULLDOWN, fiind elemente utile atunci cand dorim sa le utilizam in colaborare cu butoanele.
+- Programe Arduino: Am utilizat concepte noi, precum Debounce.

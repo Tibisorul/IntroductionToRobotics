@@ -104,13 +104,11 @@ void updateOperationalLED() {
 
 void moveElevator() {
   Serial.println("Liftul se deplasează de la etajul " + String(currentFloor) + " la etajul " + String(targetFloor) + "...");
-  
+  playBuzzer(200, 800); 
   int travelTime = 1000;
-  
   int floorDifference = abs(targetFloor - currentFloor);
   if ((currentFloor == 1 && targetFloor == 3) || (currentFloor == 3 && targetFloor == 1)) {
-    travelTime += floorDifference * 1500; 
-  } else {
+    travelTime += floorDifference * 1500;  
     travelTime += floorDifference * 500;
   }
   
@@ -119,20 +117,18 @@ void moveElevator() {
   while (millis() - startTime < travelTime) {
     updateOperationalLED();
   }
-  
   Serial.println("Liftul a ajuns la etajul " + String(targetFloor));
   elevatorArrivedSound();
-  playBuzzer(200, 1000);
-
+  playBuzzer(200, 1000); 
   doorClosedSound();
-
   elevatorMoving = false;
   currentFloor = targetFloor;
-
   updateButtonLEDs();
-
   digitalWrite(elevatorStatusLed, HIGH);
 }
+
+
+
 
 
 

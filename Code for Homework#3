@@ -15,6 +15,10 @@ bool ledState1 = false;
 bool ledState2 = false;
 bool ledState3 = false;
 
+unsigned long previousMillis = 0;
+const long buzzerInterval = 200;
+const long ledInterval = 500;
+
 void setup() {
   pinMode(buttonPin1, INPUT_PULLUP);
   pinMode(buttonPin2, INPUT_PULLUP);
@@ -28,8 +32,10 @@ void setup() {
 }
 
 void playBuzzer(int duration, int frequency) {
-  tone(buzzerPin, frequency, duration);
-  delay(duration);
+  unsigned long startTime = millis();
+  while (millis() - startTime < duration) {
+    tone(buzzerPin, frequency);
+  }
   noTone(buzzerPin);
 }
 
@@ -55,9 +61,11 @@ void updateLED(int buttonState, int ledPin, bool &ledState, int otherLedPin1, bo
     digitalWrite(ledPin, HIGH);
     ledState = true;
     playBuzzer(200, 1000);
-    delay(500); // Adăugat delay pentru a aștepta câteva momente
+    unsigned long startTime = millis();
+    while (millis() - startTime < 500) {
+    }
   } else if (!elevatorMoving && ledState) {
-    digitalWrite(ledPin, HIGH);  // Păstrează LED-ul aprins după sosire
+    digitalWrite(ledPin, HIGH);
   } else {
     digitalWrite(ledPin, LOW);
     ledState = false;
@@ -84,7 +92,11 @@ void updateButtonLEDs() {
 
 void updateOperationalLED() {
   if (elevatorMoving) {
-    digitalWrite(elevatorStatusLed, (millis() / 500) % 2);
+    unsigned long currentMillis = millis();
+    if (currentMillis - previousMillis >= ledInterval) {
+      previousMillis = currentMillis;
+      digitalWrite(elevatorStatusLed, !digitalRead(elevatorStatusLed));
+    }
   } else {
     digitalWrite(elevatorStatusLed, HIGH);
   }
@@ -96,27 +108,22 @@ void moveElevator() {
   int travelTime = 1000;
   
   int floorDifference = abs(targetFloor - currentFloor);
-  
-  // Adaugă un timp de așteptare mai mare între etaje 1 și 3 și invers
   if ((currentFloor == 1 && targetFloor == 3) || (currentFloor == 3 && targetFloor == 1)) {
-    travelTime += floorDifference * 1000;
+    travelTime += floorDifference * 1500; 
   } else {
     travelTime += floorDifference * 500;
   }
   
-  for (int i = 0; i < 5; ++i) {
-    digitalWrite(elevatorStatusLed, (millis() / 500) % 2);
-    delay(200);
-    digitalWrite(elevatorStatusLed, (millis() / 500) % 2);
-    delay(200);
+  unsigned long startTime = millis();
+
+  while (millis() - startTime < travelTime) {
+    updateOperationalLED();
   }
   
   Serial.println("Liftul a ajuns la etajul " + String(targetFloor));
   elevatorArrivedSound();
+  playBuzzer(200, 1000);
 
-  delay(travelTime);
-
-  Serial.println("Ușile liftului se închid...");
   doorClosedSound();
 
   elevatorMoving = false;
@@ -127,31 +134,45 @@ void moveElevator() {
   digitalWrite(elevatorStatusLed, HIGH);
 }
 
+
+
 void loop() {
   int buttonState1 = digitalRead(buttonPin1);
   int buttonState2 = digitalRead(buttonPin2);
   int buttonState3 = digitalRead(buttonPin3);
 
+  if (buttonState1 == LOW && !elevatorMoving) {
+    if (targetFloor != 1) {
+      updateOperationalLED();
+      targetFloor = 1;
+      elevatorMoving = true;
+      moveElevator();
+    } else {
+      playBuzzer(200, 500);
+    }
+  } else if (buttonState3 == LOW && !elevatorMoving) {
+    if (targetFloor != 3) {
+      updateOperationalLED();
+      targetFloor = 3;
+      elevatorMoving = true;
+      moveElevator();
+    } else {
+      playBuzzer(200, 500); 
+    }
+  } else if (buttonState2 == LOW && !elevatorMoving) {
+    if (targetFloor != 2) {
+      updateOperationalLED();
+      targetFloor = 2;
+      elevatorMoving = true;
+      moveElevator();
+    } else {
+      playBuzzer(200, 500);
+    }
+  }
+
   updateLED1(buttonState1, ledPin1, ledState1);
   updateLED2(buttonState2, ledPin2, ledState2);
   updateLED3(buttonState3, ledPin3, ledState3);
-
-  if (buttonState1 == LOW && !elevatorMoving) {
-    updateOperationalLED();
-    targetFloor = 1;
-    elevatorMoving = true;
-    moveElevator();
-  } else if (buttonState3 == LOW && !elevatorMoving) {
-    updateOperationalLED();
-    targetFloor = 3;
-    elevatorMoving = true;
-    moveElevator();
-  } else if (buttonState2 == LOW && !elevatorMoving) {
-    updateOperationalLED();
-    targetFloor = 2;
-    elevatorMoving = true;
-    moveElevator();
-  }
 
   Serial.print("Button 1: ");
   Serial.print(buttonState1);
@@ -159,6 +180,5 @@ void loop() {
   Serial.print(buttonState2);
   Serial.print(" | Button 3: ");
   Serial.println(buttonState3);
-
-  delay(100);
 }
+

@@ -60,15 +60,16 @@ Deadline: 7 Noiembrie 2023
 
 Descrierea temei: Prin intermediul unui Joystick trebuie sa controlam pozitia segmentului si sa il afisam pe placa 7 Segment Display.
 
-### [TikTok Video Showcase](https://www.tiktok.com/@tiberiug.dobre/video/7295362196702268705)
+### [TikTok Video Showcase](https://www.tiktok.com/@t1bisorul/video/7298326468969483552)
 
 #### Componentele utilizate:
 - 7 Segment Display(1): Permite afisarea continutului dorit.
 - Joystick(1): Prin intermediul Joystickului putem controla cele 8 segmente ale Display-ului dupa bunul plac.
 - Rezistoare(8) si fire: Am utilizat 8 rezistoare fiecare avand 220Ω pentru a asigura o conexiune corecta pentru 7 Segment Display. 
-- (??)Buzzer(1): Acesta se ocupa cu emiterea unor zgomote in functie de momentul in care se afla liftul.
-- (??)LED Rosu (1): Acesta
+- Buzzer(1): Acesta se ocupa cu emiterea unui zgomot in functie de momentul in care se afla segmentul. Atunci cand segmentul este selectat(adica atunci cand clipeste), buzzerul va scoate sunetul precum in video-ul atasat, iar atunci cand segmentul dorit nu este selectat nu va emite niciun zgomot.
 - Arduino Board: Placa Arduino este creierul proiectului meu, care face posibila "desenarea" pe 7 Segment Display, fiind programat prin intermediul aplicatiei Arduino.
+  ![image](https://github.com/Tibisorul/IntroductionToRobotics/assets/127014075/8d5b6232-9ad8-456c-9356-52e6c09f53e7)
+
 
   #### Sarcina de codare:
 - Curățenia codului este crucială, așa că menține-l ordonat.
@@ -78,6 +79,6 @@ Descrierea temei: Prin intermediul unui Joystick trebuie sa controlam pozitia se
 - Ia în considerare tabela furnizată pentru mișcările joystick-ului (joy-Moved, etc.).
 
   #### Ce am aprofundat in urma acestei teme:
-  - Lucru cu 7 Segment Display: Am câștigat experiență în manipularea și controlul unui afișaj cu 7 segmente, înțelegând cum să afișez informații și să creez efecte vizuale.
+- Lucru cu 7 Segment Display: Am câștigat experiență în manipularea și controlul unui afișaj cu 7 segmente, înțelegând cum să afișez informații și să creez efecte vizuale.
 - Interacțiunea cu Joystick-ului: Integrarea și gestionarea input-ului de la joystick.Prin intermediul acestuia am putut controla un dispozitiv electronic.
   

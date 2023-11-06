@@ -53,3 +53,31 @@ Deadline: 31 Octombrie 2023
 #### Ce am aprofundat in urma acestei teme:
 - Interfatare Hardware: Prin intermediul acestei teme, dar si prin intermediul laboratorului, am realizat necesitatea rezistoarelor de tip PULLUP si PULLDOWN, fiind elemente utile atunci cand dorim sa le utilizam in colaborare cu butoanele.
 - Programe Arduino: Am utilizat concepte noi, precum Debounce.
+
+  # Homework #4 - 7 segment display drawing
+  
+Deadline: 7 Noiembrie 2023
+
+Descrierea temei: Prin intermediul unui Joystick trebuie sa controlam pozitia segmentului si sa il afisam pe placa 7 Segment Display.
+
+### [TikTok Video Showcase](https://www.tiktok.com/@tiberiug.dobre/video/7295362196702268705)
+
+#### Componentele utilizate:
+- 7 Segment Display(1): Permite afisarea continutului dorit.
+- Joystick(1): Prin intermediul Joystickului putem controla cele 8 segmente ale Display-ului dupa bunul plac.
+- Rezistoare(8) si fire: Am utilizat 8 rezistoare fiecare avand 220Ω pentru a asigura o conexiune corecta pentru 7 Segment Display. 
+- (??)Buzzer(1): Acesta se ocupa cu emiterea unor zgomote in functie de momentul in care se afla liftul.
+- (??)LED Rosu (1): Acesta
+- Arduino Board: Placa Arduino este creierul proiectului meu, care face posibila "desenarea" pe 7 Segment Display, fiind programat prin intermediul aplicatiei Arduino.
+
+  #### Sarcina de codare:
+- Curățenia codului este crucială, așa că menține-l ordonat.
+- Folosește millis() sau micros() și întreruperi în loc de delay().
+- Încapsulează codul de mișcare a joystick-ului într-o funcție.
+- Simplifică constrângerea între 0 și 9.
+- Ia în considerare tabela furnizată pentru mișcările joystick-ului (joy-Moved, etc.).
+
+  #### Ce am aprofundat in urma acestei teme:
+  - Lucru cu 7 Segment Display: Am câștigat experiență în manipularea și controlul unui afișaj cu 7 segmente, înțelegând cum să afișez informații și să creez efecte vizuale.
+- Interacțiunea cu Joystick-ului: Integrarea și gestionarea input-ului de la joystick.Prin intermediul acestuia am putut controla un dispozitiv electronic.
+  

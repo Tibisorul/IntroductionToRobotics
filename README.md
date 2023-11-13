@@ -81,4 +81,35 @@ Descrierea temei: Prin intermediul unui Joystick trebuie sa controlam pozitia se
   #### Ce am aprofundat in urma acestei teme:
 - Lucru cu 7 Segment Display: Am câștigat experiență în manipularea și controlul unui afișaj cu 7 segmente, înțelegând cum să afișez informații și să creez efecte vizuale.
 - Interacțiunea cu Joystick-ului: Integrarea și gestionarea input-ului de la joystick.Prin intermediul acestuia am putut controla un dispozitiv electronic.
+
+    # Homework #5 - Stopwatch timer
+  
+Deadline: 14 Noiembrie 2023
+
+Descrierea temei: Prin intermediul unui 4 7 Segment Display trebuie sa construim un cronometru care va avea diferite functii.
+
+### [TikTok Video Showcase](https://www.tiktok.com/@t1bisorul/video/7298326468969483552)
+
+#### Componentele utilizate:
+- 4 7 Segment Display(1): Permite afisarea cronometrului
+- Rezistoare(8) si fire: Am utilizat 8 rezistoare fiecare avand 220Ω pentru a asigura o conexiune corecta pentru  4 7 Segment Display.
+- Shift Register SN74HC595 (1): Permite serializarea datelor de ieșire și transferul acestora către alte circuite, permițând astfel economisirea de pini pe microcontroler și gestionarea mai eficientă a mai multor dispozitive digitale. 
+- Buzzer(1): Acesta se ocupa cu emiterea unui zgomot atunci cand este apasat un buton.
+- Arduino Board: Placa Arduino este creierul proiectului meu, care face posibila realizarea unui cronometru pe 4 7 Segment Display, fiind programat prin intermediul aplicatiei Arduino.
+  ![image](https://github.com/Tibisorul/IntroductionToRobotics/assets/127014075/9934632d-4208-4c98-8295-7f1cac7566c1)
+
+  #### Cerinte:
+- Valoarea initiala a afisajului cu 7 segmente de 4 cifre ar trebui sa fie "000.0". Butonul ar trebui sa aiba urmatoarele functionalitati:
+- Butonul 1: Porneste / opreste.
+- Butonul 2: Reseteaza (daca este in modul de pauza). Reseteaza tururile salvate (daca este in modul de vizualizare a tururilor).
+- Butonul 3: Salveaza turul (daca este in modul de numarare), trece prin tururile salvate anterior (pana la 4 ture).
+  
+  #### Sarcina de codare:
+- Curățenia codului este crucială, așa că menține-l ordonat.
+- Folosește millis() sau micros() și întreruperi în loc de delay().
+- Nu folosi structuri repetitive  precum while(). Se poate folosi for().
+
+  #### Ce am aprofundat in urma acestei teme:
+- Lucru cu 4 7 Segment Display: Am câștigat experiență în manipularea și controlul unui afișaj cu 4 7 segmente, înțelegând cum să afișez informații și să creez efecte vizuale.
+- Lucru cu Shift Register: Am realizat importanta acestei componente vitale, deoarece permite extinderea numărului de ieșiri disponibile pe un microcontroler sau alt dispozitiv similar, economisind astfel resursele hardware. De asemenea este important si din punct de vedere al multiplexarii.
   

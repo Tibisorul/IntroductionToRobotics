@@ -12,6 +12,7 @@ Deadline: 26 Octombrie 2023
 - Potențiometre (3): Componente care permit reglarea rezistenței lor în funcție de poziția unui cursor. Acestea sunt utilizate pentru a controla intensitatea luminii pentru fiecare culoare a LED-ului RGB.
 - Rezistoare(3, fiecare avand rezistenta de 330Ω) și fire: Sunt utilizate pentru a asigura conexiuni sigure între componentele tale și pentru a limita curentul în circuit, în special când sunt conectate la pinii digitali ai Arduino.
 - Arduino Board: Placa Arduino este creierul proiectului meu, care preia valorile de la potențiometre și controlează intensitatea luminii pentru fiecare culoare a LED-ului RGB.
+
   
   ![image](https://github.com/Tibisorul/IntroductionToRobotics/assets/127014075/679a4a08-c9be-4456-941b-3629c7bb2d73)
 

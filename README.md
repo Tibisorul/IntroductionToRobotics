@@ -85,11 +85,15 @@ Descrierea temei: Prin intermediul unui Joystick trebuie sa controlam pozitia se
 - Interacțiunea cu Joystick-ului: Integrarea și gestionarea input-ului de la joystick.Prin intermediul acestuia am putut controla un dispozitiv electronic.
 
     # Homework #5 - Stopwatch timer
+
+  
   
 Deadline: 14 Noiembrie 2023
 
 Descrierea temei: Prin intermediul unui 4 7 Segment Display trebuie sa construim un cronometru care va avea diferite functii.
 
+> [!WARNING]  
+> Critical content demanding immediate user attention due to potential risks.
 
 https://github.com/Tibisorul/IntroductionToRobotics/assets/127014075/52101023-f5b4-4069-a2e8-dd8b5882b2fb
 

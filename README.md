@@ -96,7 +96,9 @@ Descrierea temei: Prin intermediul unui 4 7 Segment Display trebuie sa construim
 - Rezistoare(8) si fire: Am utilizat 8 rezistoare fiecare avand 220Ω pentru a asigura o conexiune corecta pentru  4 7 Segment Display.
 - Shift Register SN74HC595 (1): Permite serializarea datelor de ieșire și transferul acestora către alte circuite, permițând astfel economisirea de pini pe microcontroler și gestionarea mai eficientă a mai multor dispozitive digitale. 
 - Buzzer(1): Acesta se ocupa cu emiterea unui zgomot atunci cand este apasat un buton.
-- Arduino Board: Placa Arduino este creierul proiectului meu, care face posibila realizarea unui cronometru pe 4 7 Segment Display, fiind programat prin intermediul aplicatiei Arduino.  ![image](https://github.com/Tibisorul/IntroductionToRobotics/assets/127014075/9934632d-4208-4c98-8295-7f1cac7566c1)
+- Arduino Board: Placa Arduino este creierul proiectului meu, care face posibila realizarea unui cronometru pe 4 7 Segment Display, fiind programat prin intermediul aplicatiei Arduino.
+
+  ![image](https://github.com/Tibisorul/IntroductionToRobotics/assets/127014075/9934632d-4208-4c98-8295-7f1cac7566c1)
 
   #### Cerinte:
 - Valoarea initiala a afisajului cu 7 segmente de 4 cifre ar trebui sa fie "000.0". Butonul ar trebui sa aiba urmatoarele functionalitati:

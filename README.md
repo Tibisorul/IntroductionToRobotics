@@ -61,6 +61,9 @@ Deadline: 7 Noiembrie 2023
 
 Descrierea temei: Prin intermediul unui Joystick trebuie sa controlam pozitia segmentului si sa il afisam pe placa 7 Segment Display.
 
+> [!WARNING]  
+> Nu functioneaza cum trebuie partea de manevrare a joystick-ului. 
+
 ### [TikTok Video Showcase](https://www.tiktok.com/@t1bisorul/video/7298326468969483552)
 
 #### Componentele utilizate:
@@ -93,7 +96,7 @@ Deadline: 14 Noiembrie 2023
 Descrierea temei: Prin intermediul unui 4 7 Segment Display trebuie sa construim un cronometru care va avea diferite functii.
 
 > [!WARNING]  
-> Critical content demanding immediate user attention due to potential risks.
+> Nu functioneaza cum trebuie partea de salvare a lap-urilor. 
 
 https://github.com/Tibisorul/IntroductionToRobotics/assets/127014075/52101023-f5b4-4069-a2e8-dd8b5882b2fb
 

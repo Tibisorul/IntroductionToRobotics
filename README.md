@@ -69,6 +69,7 @@ Descrierea temei: Prin intermediul unui Joystick trebuie sa controlam pozitia se
 - Rezistoare(8) si fire: Am utilizat 8 rezistoare fiecare avand 220Ω pentru a asigura o conexiune corecta pentru 7 Segment Display. 
 - Buzzer(1): Acesta se ocupa cu emiterea unui zgomot in functie de momentul in care se afla segmentul. Atunci cand segmentul este selectat(adica atunci cand clipeste), buzzerul va scoate sunetul precum in video-ul atasat, iar atunci cand segmentul dorit nu este selectat nu va emite niciun zgomot.
 - Arduino Board: Placa Arduino este creierul proiectului meu, care face posibila "desenarea" pe 7 Segment Display, fiind programat prin intermediul aplicatiei Arduino.
+
   ![image](https://github.com/Tibisorul/IntroductionToRobotics/assets/127014075/8d5b6232-9ad8-456c-9356-52e6c09f53e7)
 
 

@@ -90,7 +90,8 @@ Deadline: 14 Noiembrie 2023
 
 Descrierea temei: Prin intermediul unui 4 7 Segment Display trebuie sa construim un cronometru care va avea diferite functii.
 
-### [TikTok Video Showcase](https://www.tiktok.com/@t1bisorul/video/7298326468969483552)
+
+https://github.com/Tibisorul/IntroductionToRobotics/assets/127014075/52101023-f5b4-4069-a2e8-dd8b5882b2fb
 
 #### Componentele utilizate:
 - 4 7 Segment Display(1): Permite afisarea cronometrului

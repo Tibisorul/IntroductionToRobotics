@@ -15,6 +15,27 @@ const int buttonSaveLap = 3;
 int displayDigits[] = {segD1, segD2, segD3, segD4};
 const int displayCount = 4;
 
+const int encodingsNumberWithDot = 16;
+
+byte byteEncodingsWithDot[encodingsNumberWithDot] = {
+  B11111101,  // 0.
+  B01100001,  // 1.
+  B11011011,  // 2.
+  B11110011,  // 3.
+  B01100111,  // 4.
+  B10110111,  // 5.
+  B10111111,  // 6.
+  B11100001,  // 7.
+  B11111111,  // 8.
+  B11110111,  // 9.
+  B11101111,  // A.
+  B00111111,  // b.
+  B10011101,  // C.
+  B01111011,  // d.
+  B10011111,  // E.
+  B10001111   // F.
+};
+
 const int encodingsNumber = 16;
 
 byte byteEncodings[encodingsNumber] = {
@@ -35,6 +56,7 @@ byte byteEncodings[encodingsNumber] = {
   B10011110,
   B10001110
 };
+
 
 unsigned long lastTime = 0;
 unsigned long delayCount = 50;
@@ -203,16 +225,15 @@ void displaySavedLapTimes() {
   }
 }
 
-void writeReg(int digit) {
+void writeReg(byte data) {
   digitalWrite(latchPin, LOW);
-
-  for (int i = 7; i >= 0; --i) {
-    digitalWrite(dataPin, (digit >> i) & 1);
-    digitalWrite(clockPin, HIGH);
-    digitalWrite(clockPin, LOW);
-  }
-
+  shiftOut(dataPin, clockPin, MSBFIRST, data);
   digitalWrite(latchPin, HIGH);
+}
+
+void clearDisplay() {
+  // Funcție pentru a curăța afișajul înainte de a scrie următoarea cifră
+  writeReg(B00000000);
 }
 
 void activateDisplay(int displayNumber) {
@@ -222,31 +243,34 @@ void activateDisplay(int displayNumber) {
   digitalWrite(displayDigits[displayNumber], LOW);
 }
 
-void writeNumber(int number) {
-  int currentNumber = number;
-  int displayDigit = 3;
-  int lastDigit = 0;
+void writeNumber(unsigned long number) {
+  static unsigned long lastUpdateTime = 0;
+  const long updateInterval = 2; // Ajustați acest interval după necesități
+  static int currentDigit = 0;
 
-  if (currentNumber == 0) {
-    for (int i = 0; i < 4; i++) {
-      activateDisplay(i);
-      writeReg(byteEncodings[0]);
-      while (millis() - lapDisplayTime < 100) {
-        // Așteaptă până când au trecut 100 de milisecunde
-      }
-      writeReg(B00000000);
+  int digits[4] = {0};
+
+  // Descompunem numărul în cifrele sale și le stocăm în array-ul 'digits'
+  for (int i = 3; i >= 0; --i) {
+    digits[i] = number % 10;
+    number /= 10;
+  }
+
+  if (millis() - lastUpdateTime > updateInterval) {
+    clearDisplay(); // Curățăm afișajul înainte de a activa următoarea cifră
+    activateDisplay(currentDigit);
+
+    // Dacă suntem la cifra 2, dorim să afișăm punctul decimal împreună cu cifra
+    if (currentDigit == 2) {
+      writeReg(byteEncodingsWithDot[digits[currentDigit]]); // folosim array-ul cu punct pentru cifra 2
+    } else {
+      writeReg(byteEncodings[digits[currentDigit]]); // folosim array-ul fără punct pentru restul cifrelor
     }
-  } else {
-    while (currentNumber != 0) {
-      lastDigit = currentNumber % 10;
-      activateDisplay(displayDigit);
-      writeReg(byteEncodings[lastDigit]);
-      while (millis() - lapDisplayTime < 100) {
-        // Așteaptă până când au trecut 100 de milisecunde
-      }
-      displayDigit--;
-      currentNumber /= 10;
-      writeReg(B00000000);
-    }
+    
+    lastUpdateTime = millis();
+    currentDigit = (currentDigit + 1) % 4; // Trecem la următoarea cifră
   }
 }
+
+
+

@@ -95,6 +95,14 @@ Deadline: 14 Noiembrie 2023
 
 Descrierea temei: Prin intermediul unui 4 7 Segment Display trebuie sa construim un cronometru care va avea diferite functii.
 
+> [!NOTE]  
+> UPDATE 1: Am adus cateva modificari in ceea ce priveste afisarea informatiilor pe 4 7 Segment Display: aparitia tuturor numerelor si a punctului (spre exemplu daca inainte aveam "2 0 4", acum am "020.4") 
+
+
+https://github.com/Tibisorul/IntroductionToRobotics/assets/127014075/3aab8aa4-458b-415e-b382-7ee14d4a15ec
+
+
+
 > [!WARNING]  
 > Nu functioneaza cum trebuie partea de salvare a lap-urilor. 
 

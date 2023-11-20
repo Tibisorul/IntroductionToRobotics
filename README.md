@@ -176,8 +176,8 @@ Se doreste implementarea unui meniu interactiv, avand urmatorele submeniuri si p
 - Control Manual al Culorilor. Utilizatorul poate seta manual culorile RGB. Utilizatorul decide cum să le introducă, fie prin oferirea unei opțiuni pentru fiecare canal, fie prin introducerea unui șir de caractere, etc. Dacă se așteaptă un anumit format, utilizatorul este informat corespunzător.
 - Comutare Automată ON/OFF. Dacă modul automat este ACTIVAT, atunci culoarea LED-ului ar trebui să fie VERDE atunci când niciuna dintre valorile senzorilor nu depășește valorile de prag (adică nu există alertă) și ROȘU atunci când există o alertă (adică ORICE valoare a senzorului depășește pragul). Când modulul automat este DEZACTIVAT, LED-ul ar trebui să folosească ultimele valori RGB salvate.
 - Revenire la meniul principal
-  
-  #### Sarcina de codare:
+
+#### Sarcina de codare:
 - EEPROM Write Cycles: Evitarea scrierilor excesive în EEPROM.Utilizarea functionalitatilor  Update() sau Put().
 - Calibrarea Senzorilor: Este importanta calibrarea senzorilor pentru citiri precise.
 - Gestionarea Erorilor în Comunicația Serială: Trebuie să fie implementată gestionarea erorilor în comunicarea serială pentru a gestiona intrările incorecte.

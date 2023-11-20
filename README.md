@@ -182,7 +182,7 @@ Se doreste implementarea unui meniu interactiv, avand urmatorele submeniuri si p
 - Calibrarea Senzorilor: Este importanta calibrarea senzorilor pentru citiri precise.
 - Gestionarea Erorilor în Comunicația Serială: Trebuie să fie implementată gestionarea erorilor în comunicarea serială pentru a gestiona intrările incorecte.
 
-  #### Ce am aprofundat in urma acestei teme:
+#### Ce am aprofundat in urma acestei teme:
 - Utilizarea senzorilor: Am invatat modul în care se integrează și se utilizează diferiți senzori, cum ar fi senzorul ultrasonic și LDR, pentru a colecta date despre mediul înconjurător și pentru a monitoriza starea mediului.
 - Gestionarea memoriei EEPROM: Am învățat cum să gestionez eficient scrierile în EEPROM, pentru a preveni uzura excesivă a memoriei.
 - Controlul LED RGB: Am dezvoltat competente sa manipulez LED-ul RGB in functie de datele oferite de senzori asupra mediului inconjurator.

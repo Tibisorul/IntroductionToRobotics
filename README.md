@@ -180,7 +180,7 @@ Se doreste implementarea unui meniu interactiv, avand urmatorele submeniuri si p
 - Revenire la meniul principal
 
 #### Sarcina de codare:
-- EEPROM Write Cycles: Evitarea scrierilor excesive în EEPROM.Utilizarea functionalitatilor  Update() sau Put().
+- EEPROM Write Cycles: Evitarea scrierilor excesive în EEPROM.
 - Calibrarea Senzorilor: Este importanta calibrarea senzorilor pentru citiri precise.
 - Gestionarea Erorilor în Comunicația Serială: Trebuie să fie implementată gestionarea erorilor în comunicarea serială pentru a gestiona intrările incorecte.
 

@@ -140,6 +140,8 @@ Deadline: 21 Noiembrie 2023
 
 Descrierea temei: Dezvoltarea unui "Monitor și înregistrator de mediu inteligent" folosind Arduino. Acest sistem va utiliza diverse senzori pentru a colecta date de mediu, pentru a le înregistra în EEPROM și pentru a furniza feedback vizual prin intermediul unui LED RGB și interacțiune cu utilizatorul printr-un Meniu Serial. Proiectul se concentrează pe integrarea citirilor senzorilor, gestionarea memoriei, comunicarea serială și obiectivul general de construire a unui meniu. Vedeți un exemplu parțial în videoclipul de mai jos (doar pentru analiza meniului): 
 
+### [YouTube Video Showcase](https://www.youtube.com/watch?v=R9Jnuu8CveA)
+
 > [!NOTE]  
 > Domnul profesor de la curs ne-a indemnat sa precizam sursele care ne-au ajutat sa ducem la indeplinire tema( un fel de bibliografie) pentru a evita depunctarea, so: Am primit ajutor de la colegul meu, Vîrtopeanu Sebastian-Filip (ii multumesc pe aceasta cale :kissing_heart:), de la care am luat cateva functionalitati si le-am implementat in tema mea cu anumite modificari personale pentru a se integra mai bine si de asemenea, am mai primit ajutor de la  ChatGPT (ii multumesc si lui :smiley:).
 

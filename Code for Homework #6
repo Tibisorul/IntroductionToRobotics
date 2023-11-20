@@ -265,7 +265,7 @@ String readLine()
 
 void displayMainMenuOptions()
 {
-    Serial.println(F("=== Main Menu ==="));
+    Serial.println(F(" Main Menu "));
     Serial.println(F("1. Sensor Settings"));
     Serial.println(F("2. Reset Logger Data"));
     Serial.println(F("3. System Status"));

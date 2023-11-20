@@ -131,4 +131,55 @@ https://github.com/Tibisorul/IntroductionToRobotics/assets/127014075/52101023-f5
   #### Ce am aprofundat in urma acestei teme:
 - Lucru cu 4 7 Segment Display: Am câștigat experiență în manipularea și controlul unui afișaj cu 4 7 segmente, înțelegând cum să afișez informații și să creez efecte vizuale.
 - Lucru cu Shift Register: Am realizat importanta acestei componente vitale, deoarece permite extinderea numărului de ieșiri disponibile pe un microcontroler sau alt dispozitiv similar, economisind astfel resursele hardware. De asemenea este important si din punct de vedere al multiplexarii.
+
+ # Homework #6 - Pseudo-Smart Environment Monitor and Logger
+
+  
+  
+Deadline: 21 Noiembrie 2023
+
+Descrierea temei: Dezvoltarea unui "Monitor și înregistrator de mediu inteligent" folosind Arduino. Acest sistem va utiliza diverse senzori pentru a colecta date de mediu, pentru a le înregistra în EEPROM și pentru a furniza feedback vizual prin intermediul unui LED RGB și interacțiune cu utilizatorul printr-un Meniu Serial. Proiectul se concentrează pe integrarea citirilor senzorilor, gestionarea memoriei, comunicarea serială și obiectivul general de construire a unui meniu. Vedeți un exemplu parțial în videoclipul de mai jos (doar pentru analiza meniului): 
+
+> [!NOTE]  
+> Domnul profesor de la curs ne-a indemnat sa precizam sursele care ne-au ajutat sa ducem la indeplinire tema( un fel de bibliografie) pentru a evita depunctarea, so: Am primit ajutor de la colegul meu, Vîrtopeanu Sebastian-Filip (ii multumesc pe aceasta cale :*), de la care am luat cateva functionalitati si le-am implementat in tema mea cu anumite modificari personale pentru a se integra mai bine si de asemenea, am mai primit ajutor de la  ChatGPT (ii multumesc si lui :*).
+
+#### Componentele utilizate:
+- Ultrasonic Sensor (HC-SR04): Utilizează ultrasunete pentru a măsura distanța între el și un obiect. Acesta emite un semnal ultrasunete și apoi măsoară timpul în care semnalul revine după ce s-a reflectat de pe obiectul din fața sa. Cu ajutorul timpului de revenire, poate calcula distanța dintre senzor și obiect.
+- LDR (Light-Dependent Resistor) : este un dispozitiv semiconductiv a cărui rezistență electrică variază în funcție de intensitatea luminii la care este expus. Cu cât lumina incidentă este mai puternică, cu atât rezistența LDR-ului devine mai mică. Acest efect se bazează pe proprietățile semiconductorilor și pe modul în care aceștia permit sau restricționează fluxul de curent în funcție de nivelul de iluminare.
+- Buzzer(1): Acesta se ocupa cu emiterea unui zgomot atunci cand este culoare LED-ului este schimbata.
+- Rezistoare(5) si fire: Am utilizat 5 rezistoare, unul avand 10kΩ (folosit pentru LDR),altul avand 10Ω pentru a asigura functionarea buzzer-ului cu un sunet placut, iar 3 rezistoare cu rezistenta de 220Ω folosite pentru LED-ul RGB
+- LED RGB(1): Responsabil pentru emiterea unor culori, fiind manipulat de senzorii mentionati mai sus.
+- Arduino Board: Placa Arduino este creierul proiectului meu, care face posibila realizarea acestui sistem care interactioneaza cu mediul.
+
+ ![image](https://github.com/Tibisorul/IntroductionToRobotics/assets/127014075/6f2ede39-f53a-4100-8ef7-10d05b17d730)
+
+  #### Cerinte:
+  Se doreste implementarea unui meniu interactiv, avand urmatorele submeniuri si proprietati:
+  1.Setările Senzorilor:
+-Intervalul de Eșantionare al Senzorilor. Utilizatorul este întrebat să introducă o valoare între 1 și 10 secunde, care va fi utilizată ca rată de eșantionare pentru senzori. Poate fi ales să se citească o valoare separată pentru fiecare senzor sau aceeași valoare pentru amândoi.
+-Limita de Alertă a Senzorului Ultrasonic. Utilizatorul este întrebat să introducă o valoare de prag pentru senzorul ultrasonic. Se poate decide dacă aceasta este valoarea minimă sau maximă (pentru a semnala, de exemplu, că ceva este prea aproape). Când valoarea senzorului depășește valoarea de prag, se generează o alertă, care poate fi sub formă de mesaj. Dacă LED-ul este setat în Modul Automat (vezi secțiunea 4.2), acesta ar trebui să devină și roșu dacă oricare dintre senzori depășește valoarea de prag.
+-Limita de Alertă a LDR (Fotorezistor). Utilizatorul este întrebat să introducă o valoare de prag pentru senzorul LDR (fotorezistor). Se poate decide dacă aceasta este valoarea minimă sau maximă (de exemplu, pentru a semnala că se apropie noaptea). Când valoarea senzorului depășește valoarea de prag, se generează o alertă, care poate fi sub formă de mesaj. Dacă LED-ul este setat în Modul Automat (vezi secțiunea 4.2), acesta ar trebui să devină și roșu dacă oricare dintre senzori depășește valoarea de prag.
+-Revenire la meniul principal
+  2.Reset Logger Data: Afișează un mesaj care întreabă utilizatorul dacă este sigur că dorește să șteargă toate datele, de exemplu, "Sunteți sigur?". Acesta este urmat de submeniul cu opțiunile DA sau NU. Utilizatorul poate să reseteze datele pentru ambii senzori în același timp sau individual. Opțiunea individuală poate fi mai logică, dar se poate alege și varianta simplificată.
+-Da;
+-Nu;
+  3.Starea sistemului:
+- Citirile Curente ale Senzorilor: Sunt afișate în mod continuu citirile senzorilor la rata de eșantionare setată, pentru toți senzorii. Se asigură existența unei modalități de ieșire din această secțiune, de exemplu, prin apăsarea unei taste specifice, și se informează utilizatorul despre această metodă printr-un mesaj.
+- Setările Curente ale Senzorilor. Sunt afișate rata de eșantionare și valoarea de prag pentru toți senzorii.
+- Afișarea Datelor Înregistrate. Sunt afișate ultimele 10 citiri ale senzorilor pentru toți senzorii. (sau puteți fi creativ și să găsiți o altă modalitate).
+- Revenire la meniul principal.
+  4.Control LED RGB:
+- Control Manual al Culorilor. Utilizatorul poate seta manual culorile RGB. Utilizatorul decide cum să le introducă, fie prin oferirea unei opțiuni pentru fiecare canal, fie prin introducerea unui șir de caractere, etc. Dacă se așteaptă un anumit format, utilizatorul este informat corespunzător.
+- Comutare Automată ON/OFF. Dacă modul automat este ACTIVAT, atunci culoarea LED-ului ar trebui să fie VERDE atunci când niciuna dintre valorile senzorilor nu depășește valorile de prag (adică nu există alertă) și ROȘU atunci când există o alertă (adică ORICE valoare a senzorului depășește pragul). Când modulul automat este DEZACTIVAT, LED-ul ar trebui să folosească ultimele valori RGB salvate.
+- Revenire la meniul principal
+  
+  #### Sarcina de codare:
+- EEPROM Write Cycles: Evitarea scrierilor excesive în EEPROM.Utilizarea functionalitatilor  Update() sau Put().
+- Calibrarea Senzorilor: Este importanta calibrarea senzorilor pentru citiri precise.
+- Gestionarea Erorilor în Comunicația Serială: Trebuie să fie implementată gestionarea erorilor în comunicarea serială pentru a gestiona intrările incorecte.
+
+  #### Ce am aprofundat in urma acestei teme:
+- Utilizarea senzorilor: Am invatat modul în care se integrează și se utilizează diferiți senzori, cum ar fi senzorul ultrasonic și LDR, pentru a colecta date despre mediul înconjurător și pentru a monitoriza starea mediului.
+- Gestionarea memoriei EEPROM: Am învățat cum să gestionez eficient scrierile în EEPROM, pentru a preveni uzura excesivă a memoriei.
+- Controlul LED RGB: Am dezvoltat competente sa manipulez LED-ul RGB in functie de datele oferite de senzori asupra mediului inconjurator.
   

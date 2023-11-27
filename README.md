@@ -189,6 +189,7 @@ Se doreste implementarea unui meniu interactiv, avand urmatorele submeniuri si p
 - Gestionarea memoriei EEPROM: Am învățat cum să gestionez eficient scrierile în EEPROM, pentru a preveni uzura excesivă a memoriei.
 - Controlul LED RGB: Am dezvoltat competente sa manipulez LED-ul RGB in functie de datele oferite de senzori asupra mediului inconjurator.
 
+ # Homework #7 - Mini Matrix Game
   Deadline: 28 Noiembrie 2023
 
 Descrierea temei: Dezvoltarea unui joculet pe o matrice de tipul 8x8. Jocul trebuie sa aiba cel putin 3 elemente: player-ul(in cazul meu tank-ul), bombe/gloante si peretii. Obiectivul acestei teme este pentru acomodarea cu lucrul matriciilor avand in vedere ca in viitor va urma proiectul cu matrice. Astfel, eu am ales sa fac joculetul "Tanks".

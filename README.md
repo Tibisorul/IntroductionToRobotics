@@ -188,4 +188,39 @@ Se doreste implementarea unui meniu interactiv, avand urmatorele submeniuri si p
 - Utilizarea senzorilor: Am invatat modul în care se integrează și se utilizează diferiți senzori, cum ar fi senzorul ultrasonic și LDR, pentru a colecta date despre mediul înconjurător și pentru a monitoriza starea mediului.
 - Gestionarea memoriei EEPROM: Am învățat cum să gestionez eficient scrierile în EEPROM, pentru a preveni uzura excesivă a memoriei.
 - Controlul LED RGB: Am dezvoltat competente sa manipulez LED-ul RGB in functie de datele oferite de senzori asupra mediului inconjurator.
+
+  Deadline: 28 Noiembrie 2023
+
+Descrierea temei: Dezvoltarea unui joculet pe o matrice de tipul 8x8. Jocul trebuie sa aiba cel putin 3 elemente: player-ul(in cazul meu tank-ul), bombe/gloante si peretii. Obiectivul acestei teme este pentru acomodarea cu lucrul matriciilor avand in vedere ca in viitor va urma proiectul cu matrice. Astfel, eu am ales sa fac joculetul "Tanks".
+
+https://github.com/Tibisorul/IntroductionToRobotics/assets/127014075/8529bb91-7935-49e3-9947-9c56f1e97938
+
+> [!NOTE]  
+> Domnul profesor de la curs ne-a indemnat sa precizam sursele care ne-au ajutat sa ducem la indeplinire tema( un fel de bibliografie) pentru a evita depunctarea, so: Am primit ajutor de la colegul meu, Vîrtopeanu Sebastian-Filip (ii multumesc pe aceasta cale :kissing_heart:), de la care am luat cateva functionalitati si le-am implementat in tema mea cu anumite modificari personale pentru a se integra mai bine si de asemenea, am mai primit ajutor de la  ChatGPT (ii multumesc si lui :smiley:).
+
+#### Componentele utilizate:
+- Buzzer(1): Acesta se ocupa cu emiterea unui zgomot atunci cand player-ul(tank-ul) trage.
+- Joystick(1): Cu ajutorul acestuia vom putea controla pozitia player-ului(tank-ului).
+- 8x8 LED Matrix(1): Pe aceasta componenta vor fi afisate player-ul(tank-ul), peretii si bombele/gloantele.
+- MAX7219(1): Este un integrat controler de afișaj LED, utilizat pentru a controla matrici LED-uri și display-uri digitale cu 7 segmente.
+- Rezistoare(5) si fire: Am utilizat 3 rezistoare, doua avand 220Ω (folosit pentru luminarea celor doua LED-uri), altul avand 100Ω pentru a asigura functionarea buzzer-ului cu un sunet de tip tragere a unui tank.
+- LED Rosu(1): Responsabil pentru luminarea sa atunci cand player-ul trage(mai exact atunci cand este apasat butonul Joystick-ului).
+- LED Verde(1): Responsabil pentru luminarea sa atunci cand player-ul(tank-ul) reuseste sa distruga peretii.
+- Arduino Board: Placa Arduino este creierul proiectului meu, care face posibila realizarea acestui joculet.
+
+  
+![WhatsApp Image 2023-11-27 at 18 47 41_3965d904](https://github.com/Tibisorul/IntroductionToRobotics/assets/127014075/9ec421ae-79a2-4e34-b3f7-cbfc24972e70)
+
+
+#### Cerinte:
+1. Diferențierea LED-urilor: Jucătorul și bombele/gloanțele trebuie să clipească cu rate diferite. Jucătorul ar trebui să clipească încet, iar bomba/glonțul să clipească repede. Peretele nu trebuie să clipească deloc.
+2. Control: Trebuie să se asigure că controlul este fluid. Se poate implementa orice tip de control pe joystick, dar trebuie să fie "plăcut" de utilizat în timpul jocului.
+3. Control: Trebuie să se asigure că nu se generează pereți peste jucător atunci când jocul începe.
+
+
+#### Ce am aprofundat in urma acestei teme:
+- Utilizarea matricii de tip 8x8: Am invatat modul în care se manipuleaza matricea de tip 8x8, impreuna cu joystick-ul pentru a implementa un mini-joculet.
+- Lucrul cu integratul MAX7219: Am reusit sa invat din punct de vedere hardware modul de conectare a acestui integrat impreuna cu matricea de tip 8x8.
+
+  
   

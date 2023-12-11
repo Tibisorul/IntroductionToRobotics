@@ -223,5 +223,26 @@ https://github.com/Tibisorul/IntroductionToRobotics/assets/127014075/8529bb91-79
 - Utilizarea matricii de tip 8x8: Am invatat modul în care se manipuleaza matricea de tip 8x8, impreuna cu joystick-ul pentru a implementa un mini-joculet.
 - Lucrul cu integratul MAX7219: Am reusit sa invat din punct de vedere hardware modul de conectare a acestui integrat impreuna cu matricea de tip 8x8.
 
+ # Homework #8 - Matrix Checkpoint
+  Deadline: 12 Decembrie  2023
+
+  > [!IMPORTANT]  
+  > Aceasta tema are legatura cu proiectul legat de matrice, astfel nu este completa, deoarece reprezinta un checkpoint! 
+
   
+  ![WhatsApp Image 2023-12-11 at 21 06 42_61b8f20b](https://github.com/Tibisorul/IntroductionToRobotics/assets/127014075/05dd2837-4998-4fc8-a5f0-484b0a4174fb)
+
+
+  Ce am realizat pana acum:
+  - Intro Message
+  - Menu: a) Start Game
+          b) Settings (nu tot)
+          c) About (aici am facut un artificiu, am adaugat informatiile despre About - sau informatii AFK cum le mai spun eu -, atunci cand sistemul detecteaza o inactivitate).
+    
+
+https://github.com/Tibisorul/IntroductionToRobotics/assets/127014075/3a76111f-af39-41de-9521-c0a72f539b4c
+
+
+
+
   

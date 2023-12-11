@@ -1,0 +1,450 @@
+#include <EEPROM.h>
+#include <LedControl.h>
+#include <LiquidCrystal.h>
+
+#define EMPTY 0
+#define PLAYER 1
+#define WALL 2
+#define DOOR 3 // Punct de trecere la următoarea cameră sau nivel
+
+const byte matrixSize = 8;
+byte maze[matrixSize][matrixSize] = {EMPTY};
+byte level = 1;
+byte room = 1;
+
+const byte dinPin = 12;
+const byte clkPin = 11;
+const byte loadPin = 10;
+
+
+LedControl lc = LedControl(dinPin, clkPin, loadPin, 1);
+
+// Pinii LCD și configurația joystick-ului
+const byte rs = 9, en = 8, d4 = 7, d5 = 6, d6 = 5, d7 = 4;
+const int joystickX = A0, joystickY = A1,  joystickButton = 2;
+const int joystickCenter = 512, joystickDeadZone = 200;
+
+unsigned long lastJoystickActivity = 0;
+const unsigned long idleTime = 5000; // 5 secunde de inactivitate
+unsigned long currentFrame = 0;
+unsigned long lastPlayerBlinkTime = 0;
+const unsigned long playerBlinkPeriod = 500; // Clipire la fiecare 500 ms
+bool playerBlinkState = false;
+unsigned long playerBlinkPeriodFrame = 50;
+
+int numarVieti = 3; // Presupunem că jucătorul începe cu 3 vieți
+int nivelActual = 1; // Nivelul inițial
+
+
+
+LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
+
+enum MenuState {
+  MENU_MAIN,
+  MENU_START_GAME,
+  MENU_HIGHSCORE,
+  MENU_SETTINGS,
+  MENU_ABOUT,
+  MENU_HOW_TO_PLAY
+};
+
+enum DisplayState {
+  DISPLAY_MENU,
+  DISPLAY_INFO,
+  DISPLAY_GAME 
+};
+
+struct Player {
+  int x; // Poziția X a jucătorului în labirint
+  int y; // Poziția Y a jucătorului în labirint
+  // Poți adăuga și alte atribute necesare, cum ar fi direcția, starea etc.
+  bool state;
+};
+
+DisplayState currentDisplay = DISPLAY_MENU;
+int infoPage = 0;
+
+MenuState currentMenu = MENU_MAIN;
+int menuItem = 0;
+
+Player player;
+
+void setup() {
+ // LedControl lc = LedControl(dinPin, clkPin, loadPin, 1);
+  lc.shutdown(0, false); // Scoate modulul din starea de shutdown
+  lc.setIntensity(0, 8); // Setează intensitatea (valori între 0 și 15)
+  lc.clearDisplay(0); // Curăță display-ul
+  //lc.setLed(0, 0, 0, true);
+
+  pinMode(joystickButton, INPUT_PULLUP);
+  player.x = 1;
+  player.y = 1;
+  lcd.begin(16, 2);
+
+  numarVieti = 3;
+  nivelActual = 1;
+
+  // Afișează mesajul de bun venit
+  lcd.print(" Bine ati venit");
+  lcd.setCursor(0, 1); 
+  lcd.print("   in labirint");
+  delay(3000);
+
+  // Afișează informații despre creator
+  lcd.clear();
+  lcd.print("  Realizat de");
+  lcd.setCursor(0, 1);
+  lcd.print(" Dobre Tiberiu");
+  delay(3000);
+
+  // Setează meniul principal ca fiind ecranul curent și resetează temporizatorul de inactivitate
+  currentDisplay = DISPLAY_MENU;
+  lastJoystickActivity = millis();
+  displayMainMenu(); // Afișează meniul principal
+  initializeMaze();
+  Serial.begin(9600);
+}
+
+void initializeMaze() {
+  // Resetarea labirintului
+  for (int i = 0; i < matrixSize; i++) {
+    for (int j = 0; j < matrixSize; j++) {
+      maze[i][j] = EMPTY;
+    }
+  }
+
+  // Adăugarea zidurilor și a ușii
+  // Aceasta este doar o configurație exemplu. 
+  // Poți modifica configurația în funcție de nivel și cameră.
+  for (int i = 0; i < matrixSize; i++) {
+    maze[0][i] = WALL; // Zid de sus
+    maze[matrixSize - 1][i] = WALL; // Zid de jos
+    maze[i][0] = WALL; // Zid stâng
+    maze[i][matrixSize - 1] = WALL; // Zid drept
+  }
+
+  // Crearea unui traseu simplu în labirint
+  maze[1][2] = WALL;
+  maze[2][2] = WALL;
+  maze[3][2] = WALL;
+  maze[4][2] = WALL;
+  maze[5][2] = WALL;
+  maze[6][2] = WALL;
+
+  maze[1][5] = WALL;
+  maze[2][5] = WALL;
+  maze[3][5] = WALL;
+  maze[4][5] = WALL;
+  maze[5][5] = WALL;
+  maze[6][5] = WALL;
+
+  // Poziția ușii pentru trecerea la următoarea cameră
+  maze[7][4] = DOOR;
+
+  // Inițializarea poziției jucătorului
+
+  
+  maze[player.y][player.x] = PLAYER;
+}
+
+
+void loop() {
+  if (digitalRead(joystickButton) == LOW) {
+    Serial.println("Buton Apasat");
+  } else {
+    Serial.println("Buton Eliberat");
+  }
+  delay(200); // Doar pentru a limita numărul de mesaje afișate
+  
+    int xValue = analogRead(joystickX);
+    int yValue = analogRead(joystickY);
+
+    if (abs(xValue - joystickCenter) > joystickDeadZone || abs(yValue - joystickCenter) > joystickDeadZone) {
+        lastJoystickActivity = millis();
+
+        if (currentDisplay == DISPLAY_MENU) {
+            handleMenuNavigation(xValue, yValue);
+        } else if (currentDisplay == DISPLAY_GAME) {
+            handleGameLogic(xValue, yValue);
+        }
+    }
+
+    if (digitalRead(joystickButton) == LOW && currentDisplay == DISPLAY_GAME) {
+        movePlayerInMaze();
+        delay(200); // Debounce pentru joystick
+    }
+
+    if (currentDisplay == DISPLAY_MENU && millis() - lastJoystickActivity > idleTime) {
+        currentDisplay = DISPLAY_INFO;
+    } else if (currentDisplay == DISPLAY_INFO && millis() - lastJoystickActivity < idleTime) {
+        currentDisplay = DISPLAY_MENU;
+    }
+
+    if (currentDisplay == DISPLAY_MENU) {
+        displayMainMenu();
+    } else if (currentDisplay == DISPLAY_INFO) {
+        displayInfoScreen();
+    } else if (currentDisplay == DISPLAY_GAME) {
+          Serial.println("Afișare joc");
+    }
+
+    updatePlayerBlinkState();
+    refreshDisplay();
+}
+
+void movePlayerInMaze() {
+    int xValue = analogRead(joystickX);
+    int yValue = analogRead(joystickY);
+    int newX = player.x;
+    int newY = player.y;
+
+    // Determină noua poziție bazată pe mișcarea joystick-ului
+    if (abs(xValue - joystickCenter) > joystickDeadZone) {
+        if (xValue < joystickCenter && newX > 0) { // Mergi la stânga
+            newX--;
+        } else if (xValue > joystickCenter && newX < matrixSize - 1) { // Mergi la dreapta
+            newX++;
+        }
+    }
+    if (abs(yValue - joystickCenter) > joystickDeadZone) {
+        if (yValue < joystickCenter && newY > 0) { // Mergi în sus
+            newY--;
+        } else if (yValue > joystickCenter && newY < matrixSize - 1) { // Mergi în jos
+            newY++;
+        }
+    }
+
+    // Verifică dacă noua poziție este liberă (nu este un zid)
+    if (maze[newY][newX] != WALL) {
+        // Actualizează poziția jucătorului în labirint
+        maze[player.y][player.x] = EMPTY; // Curăță poziția veche
+        player.x = newX;
+        player.y = newY;
+        maze[player.y][player.x] = PLAYER; // Marchează noua poziție
+    }
+
+    // Verifică dacă jucătorul a atins ușa pentru a avansa la următoarea cameră sau nivel
+    if (maze[player.y][player.x] == DOOR) {
+        advanceToNextRoomOrLevel();
+    }
+
+    // Actualizează afișajul
+    refreshDisplay();
+}
+
+
+
+void handleMenuNavigation(int xValue, int yValue) {
+   if (currentDisplay == DISPLAY_MENU) {
+        // Logica pentru navigarea în meniu
+        if (abs(yValue - joystickCenter) > joystickDeadZone) {
+            if (yValue < joystickCenter) {
+                menuItem = max(0, menuItem - 1);
+            } else {
+                menuItem = min(4, menuItem + 1);
+            }
+            displayMainMenu();
+            delay(200); // Debounce pentru joystick
+        }
+    // Verifică dacă butonul joystick-ului a fost apăsat pentru a selecta opțiunea curentă
+    if (digitalRead(joystickButton) == LOW) { // Presupunând că joystickButton este pinul butonului joystick-ului
+        Serial.println("Butonul joystick-ului apăsat în meniu");
+        switch (menuItem) {
+            case 0: // Start Game
+                Serial.println("Inceperea jocului");
+                currentDisplay = DISPLAY_GAME;
+                initializeMaze(); // Inițializează labirintul pentru joc
+                player.x = 1; // Setează poziția inițială a jucătorului
+                player.y = 1;
+                lcd.clear();
+                lcd.print("Nivel: ");
+                lcd.print(nivelActual);
+                lcd.setCursor(0, 1);
+                lcd.print("Vieti: ");
+                lcd.print(numarVieti);
+                
+
+                break;
+            case 1: // Highscore
+                // Logică pentru afișarea Highscore-ului
+                break;
+            case 2: // Settings
+                // Logică pentru afișarea și modificarea setărilor
+                break;
+            case 3: // About
+                // Logică pentru afișarea informațiilor despre joc/creator
+                break;
+            case 4: // How to Play
+                // Logică pentru afișarea instrucțiunilor de joc
+                break;
+        }
+    }
+ }
+}
+
+void handleGameLogic(int xValue, int yValue) {
+    // Verifică direcția de mișcare a jucătorului
+    if (abs(xValue - joystickCenter) > joystickDeadZone || abs(yValue - joystickCenter) > joystickDeadZone) {
+        int newX = player.x;
+        int newY = player.y;
+
+        // Determină noua poziție pe baza mișcării joystick-ului
+        if (abs(xValue - joystickCenter) > abs(yValue - joystickCenter)) {
+            if (xValue < joystickCenter && newX > 0) { // Mergi la stânga
+                newX--;
+            } else if (xValue > joystickCenter && newX < matrixSize - 1) { // Mergi la dreapta
+                newX++;
+            }
+        } else {
+            if (yValue < joystickCenter && newY > 0) { // Mergi în sus
+                newY--;
+            } else if (yValue > joystickCenter && newY < matrixSize - 1) { // Mergi în jos
+                newY++;
+            }
+        }
+
+        // Verifică dacă noua poziție este liberă (nu este un zid)
+        if (maze[newY][newX] != WALL) {
+            // Actualizează poziția jucătorului în labirint
+            maze[player.y][player.x] = EMPTY; // Curăță poziția veche
+            player.x = newX;
+            player.y = newY;
+            maze[player.y][player.x] = PLAYER; // Marchează noua poziție
+        }
+
+        // Verifică dacă jucătorul a atins ușa pentru a avansa la următoarea cameră sau nivel
+        if (maze[player.y][player.x] == DOOR) {
+            advanceToNextRoomOrLevel();
+        }
+
+        // Actualizează afișajul
+        refreshDisplay();
+    }
+}
+
+// Presupunem că avem variabile globale pentru nivelul și camera curentă
+int currentLevel = 1;
+int currentRoom = 1;
+const int maxRoomsPerLevel = 3; // Să presupunem că avem 3 camere pe nivel
+
+void advanceToNextRoomOrLevel() {
+    // Avansează la următoarea cameră
+    currentRoom++;
+
+    // Verifică dacă toate camerele de pe nivelul curent au fost completate
+    if (currentRoom > maxRoomsPerLevel) {
+        // Treci la următorul nivel și reîncepe cu prima cameră
+        currentLevel++;
+        currentRoom = 1;
+
+        // Opțional: Adaugă logica pentru a verifica dacă jocul a fost completat
+        // și pentru a trata acest caz, de exemplu să afișezi un mesaj de felicitare.
+
+        // Aici poți adăuga logica pentru a face jocul mai dificil la fiecare nivel nou
+    }
+
+    // Reinițializează labirintul pentru noua cameră sau nivel
+    initializeMaze();
+}
+
+void refreshDisplay() {
+  currentFrame++;
+  for (int i = 0; i < matrixSize; i++) {
+      for (int j = 0; j < matrixSize; j++) {
+           updateLedState(i, j);
+        }
+    }
+}
+
+
+void updatePlayerBlinkState() {
+    unsigned long currentTime = millis();
+    if (currentTime - lastPlayerBlinkTime >= playerBlinkPeriod) {
+        player.state = !player.state; // Schimbă starea de clipire
+        lastPlayerBlinkTime = currentTime; // Actualizează timpul ultimei clipiri
+    }
+}
+
+
+
+
+
+void updateLedState(int row, int col) {
+  bool state = false;
+  switch (maze[row][col]) {
+    case PLAYER:
+      state = player.state; // Schimbă starea la fiecare 10 cadre
+      break;
+    case WALL:
+      state = true;
+      break;
+    case DOOR:
+      state = false; // sau true, în funcție de cum doriți să reprezentați ușa
+      break;
+    case EMPTY:
+    default:
+      state = false;
+      break;
+  }
+  lc.setLed(0, row, col, state);
+}
+
+
+
+void displayMainMenu() {
+  lcd.clear();
+  lcd.setCursor(0, 0);
+  switch (menuItem) {
+    case 0:
+      lcd.print(">Start Game");
+      break;
+    case 1:
+      lcd.print(">Highscore");
+      break;
+    case 2:
+      lcd.print(">Settings");
+      break;
+    case 3:
+      lcd.print(">About");
+      break;
+    case 4:
+      lcd.print(">How to Play");
+      break;
+  }
+}
+
+void displayInfoScreen() {
+  lcd.clear();
+  unsigned long startTime = millis();
+  switch (infoPage) {
+    case 0:
+      lcd.print("Creator:");
+      lcd.setCursor(0, 1);
+      lcd.print("Dobre Tiberiu");
+      break;
+    case 1:
+      lcd.print("github.com:");
+      lcd.setCursor(0, 1);
+      lcd.print("Tibisorul@IntroToRob");
+      break;
+    case 2:
+      lcd.print("Tipul jocului:");
+      lcd.setCursor(0, 1);
+      lcd.print("Labirint");
+      break;
+  }
+
+  // Așteaptă fără a bloca programul
+  while (millis() - startTime < 3000) {
+    int xValue = analogRead(joystickX);
+    int yValue = analogRead(joystickY);
+    if (abs(xValue - joystickCenter) > joystickDeadZone || abs(yValue - joystickCenter) > joystickDeadZone) {
+      lastJoystickActivity = millis(); // Actualizează timpul ultimei activități
+      currentDisplay = DISPLAY_MENU;
+      infoPage = 0; // Resetează pagina de informații
+      return; // Ieșire imediată din funcție și revenire la meniu
+    }
+  }
+
+  infoPage = (infoPage + 1) % 3; // Treci la următoarea pagină
+}
